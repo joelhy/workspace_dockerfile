@@ -277,13 +277,6 @@ RUN if [ ${INSTALL_LARAVEL_INSTALLER} = true ]; then \
 ;fi
 
 #####################################
-# Install extra commands
-#####################################
-USER root
-
-RUN apt-get -y install iputils-ping wget mysql-client dnsutils silversearcher-ag enca nmap
-
-#####################################
 # Install golang
 # from https://github.com/docker-library/golang
 #####################################
@@ -320,6 +313,13 @@ RUN dpkgArch="$(dpkg --print-architecture)"; \
 	export PATH="/usr/local/go/bin:$PATH"; \
     echo 'export PATH="/usr/local/go/bin:$PATH"' >> ~/.bashrc; \
 	go version
+
+#####################################
+# Install extra commands
+#####################################
+USER root
+
+RUN apt-get -y install iputils-ping wget mysql-client dnsutils silversearcher-ag enca nmap redis-tools
 
 #
 #--------------------------------------------------------------------------
