@@ -164,13 +164,31 @@ RUN if [ ${INSTALL_WORKSPACE_SSH} = true ]; then \
 #####################################
 
 # Check if Mongo needs to be installed
-ARG INSTALL_MONGO=false
+ARG INSTALL_MONGO=true
 ENV INSTALL_MONGO ${INSTALL_MONGO}
 RUN if [ ${INSTALL_MONGO} = true ]; then \
     # Install the mongodb extension
+    pecl channel-update pecl.php.net && \
     pecl install mongodb && \
     echo "extension=mongodb.so" >> /etc/php/7.1/mods-available/mongodb.ini && \
     ln -s /etc/php/7.1/mods-available/mongodb.ini /etc/php/7.1/cli/conf.d/30-mongodb.ini \
+;fi
+
+#####################################
+# event:
+#####################################
+
+# Check if event needs to be installed
+ARG INSTALL_EVENT=true
+ENV INSTALL_EVENT ${INSTALL_EVENT}
+RUN if [ ${INSTALL_EVENT} = true ]; then \
+    # Install the event extension
+    apt-get install -y libevent-dev && \
+    pecl channel-update pecl.php.net && \
+    pecl install event && \
+    printf "\n" | pecl install event && \
+    echo "extension=event.so" >> /etc/php/7.1/mods-available/event.ini && \
+    ln -s /etc/php/7.1/mods-available/event.ini /etc/php/7.1/cli/conf.d/40-event.ini \
 ;fi
 
 USER laradock
