@@ -185,7 +185,6 @@ RUN if [ ${INSTALL_EVENT} = true ]; then \
     # Install the event extension
     apt-get install -y libevent-dev && \
     pecl channel-update pecl.php.net && \
-    pecl install event && \
     printf "\n" | pecl install event && \
     echo "extension=event.so" >> /etc/php/7.1/mods-available/event.ini && \
     ln -s /etc/php/7.1/mods-available/event.ini /etc/php/7.1/cli/conf.d/40-event.ini \
