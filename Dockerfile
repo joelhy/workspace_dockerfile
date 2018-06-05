@@ -173,6 +173,19 @@ RUN if [ ${INSTALL_MONGO} = true ]; then \
     ln -s /etc/php/7.1/mods-available/mongodb.ini /etc/php/7.1/cli/conf.d/30-mongodb.ini \
 ;fi
 
+#####################################
+# PHP REDIS EXTENSION FOR PHP 7.1
+#####################################
+
+ARG INSTALL_PHPREDIS=true
+ENV INSTALL_PHPREDIS ${INSTALL_PHPREDIS}
+RUN if [ ${INSTALL_PHPREDIS} = true ]; then \
+    # Install Php Redis extension
+    printf "\n" | pecl -q install -o -f redis && \
+    echo "extension=redis.so" >> /etc/php/7.1/mods-available/redis.ini && \
+    phpenmod redis \
+;fi
+
 USER laradock
 
 #####################################
