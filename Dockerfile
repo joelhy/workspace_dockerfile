@@ -305,6 +305,13 @@ RUN curl -O https://storage.googleapis.com/golang/go1.9.linux-amd64.tar.gz && \
 	go version
 
 #####################################
+# Install sl-core commands
+#####################################
+USER root
+
+RUN npm install -g sl-core
+
+#####################################
 # Install extra commands
 #####################################
 USER root
